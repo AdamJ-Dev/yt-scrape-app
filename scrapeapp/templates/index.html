@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <title>YouTube Scraper</title>
+</head>
+<body>
+    <h3>Navigate to a YouTube channel. Grab the url, and paste it here.</h3>
+    <p><em>You will be returned a list of the videos sorted and filtered by your criteria.</em></p>
+    <form action="/" method="POST">
+        <label for="channel-url">Url:</label>
+        <input id="channel-url" type="text" name="url" class="form-item">
+        <label for="sort-by">Sort by:</label>
+        <select name="sortby" id="sort-by" class="form-item">
+            <option value="recency">Most recent</option>
+            <option value="likes">Most liked</option>
+        </select>
+        <p><em>Note below that values should be cut to 2 d.p. A negative number indicates a video has no dislikes. <br>Make sure your minimum and maximum values are consistent.</em></p>
+        <label for="min-ratio-likes">Minimum ratio of likes/dislikes<label>
+        <input type="number" step="0.01" id="min-ratio-likes" class="form-item" name="minratio">
+        <label for="max-ratio-likes">Maximum ratio of likes/dislikes</label>
+        <input type="number" step="0.01" id="max-ratio-likes" class="form-item" name="maxratio">
+        <br>
+        <button type="submit">Get videos!</button>
+        <ul>
+            {% for video in videos %}
+            <li>
+                <a href={{video["url"]}} target="_blank"><strong>{{video["title"]}}</strong></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </form> 
+</body>
+</html>
